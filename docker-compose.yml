@@ -27,8 +27,7 @@ services:
       context: ./apps/api
       dockerfile: Dockerfile
     command: >
-      sh -c "python manage.py migrate &&
-             python manage.py runserver 0.0.0.0:8000"
+      sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     volumes:
       - ./apps/api:/app
     ports:
@@ -36,7 +35,7 @@ services:
     environment:
       - DEBUG=True
       - SECRET_KEY=dev-secret-key-change-in-production
-      - ALLOWED_HOSTS=*
+      - ALLOWED_HOSTS=localhost,127.0.0.1,api
       - DB_ENGINE=django.db.backends.sqlite3
       - DB_NAME=/app/db.sqlite3
       - REDIS_HOST=redis

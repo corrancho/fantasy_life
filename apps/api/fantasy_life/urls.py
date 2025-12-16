@@ -17,8 +17,29 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from users.views import UserViewSet
+
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def api_root(request):
+    """Root API endpoint with basic information."""
+    return Response({
+        'message': 'Fantasy Life API',
+        'version': '1.0.0',
+        'endpoints': {
+            'users': '/api/users/',
+            'auth': {
+                'login': '/api/token/',
+                'refresh': '/api/token/refresh/',
+            }
+        }
+    })
+
 
 # Create router for DRF viewsets
 router = DefaultRouter()
@@ -26,6 +47,7 @@ router.register(r'users', UserViewSet, basename='user')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/', api_root, name='api-root'),
     path('api/', include(router.urls)),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),

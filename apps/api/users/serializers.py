@@ -11,9 +11,6 @@ class UserSerializer(serializers.ModelSerializer):
                   'bio', 'photo', 'show_full_name', 'show_bio', 'show_photo',
                   'is_active', 'is_public_mode_active', 'date_joined')
         read_only_fields = ('id', 'date_joined')
-        extra_kwargs = {
-            'email': {'write_only': True}
-        }
 
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
