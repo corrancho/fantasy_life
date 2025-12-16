@@ -22,6 +22,10 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from users.views import UserViewSet
+from wishes.views import (
+    CategoryViewSet, WishViewSet, MatchViewSet, AssignmentViewSet,
+    NegotiationViewSet, ExecutionViewSet, RankingsViewSet
+)
 
 
 @api_view(['GET'])
@@ -36,6 +40,17 @@ def api_root(request):
             'auth': {
                 'login': '/api/token/',
                 'refresh': '/api/token/refresh/',
+            },
+            'categories': '/api/categories/',
+            'wishes': '/api/wishes/',
+            'matches': '/api/matches/',
+            'assignments': '/api/assignments/',
+            'negotiations': '/api/negotiations/',
+            'executions': '/api/executions/',
+            'rankings': {
+                'most_completed': '/api/rankings/most_completed/',
+                'best_rated': '/api/rankings/best_rated/',
+                'fastest_completion': '/api/rankings/fastest_completion/',
             }
         }
     })
@@ -44,6 +59,13 @@ def api_root(request):
 # Create router for DRF viewsets
 router = DefaultRouter()
 router.register(r'users', UserViewSet, basename='user')
+router.register(r'categories', CategoryViewSet, basename='category')
+router.register(r'wishes', WishViewSet, basename='wish')
+router.register(r'matches', MatchViewSet, basename='match')
+router.register(r'assignments', AssignmentViewSet, basename='assignment')
+router.register(r'negotiations', NegotiationViewSet, basename='negotiation')
+router.register(r'executions', ExecutionViewSet, basename='execution')
+router.register(r'rankings', RankingsViewSet, basename='ranking')
 
 urlpatterns = [
     path('admin/', admin.site.urls),

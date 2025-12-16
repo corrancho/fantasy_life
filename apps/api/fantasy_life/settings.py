@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'channels',
     # Local apps
     'users',
+    'wishes',
 ]
 
 MIDDLEWARE = [
