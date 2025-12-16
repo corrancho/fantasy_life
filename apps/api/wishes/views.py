@@ -3,6 +3,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.db.models import Q, Count, Avg, F, ExpressionWrapper, fields as django_fields
 from django.utils import timezone
+from django.contrib.auth import get_user_model
 from datetime import timedelta
 import random
 
@@ -13,6 +14,8 @@ from .serializers import (
     ExecutionSerializer, RankingSerializer
 )
 from .permissions import IsOwnerOrReadOnly, IsMatchParticipant
+
+User = get_user_model()
 
 
 class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
@@ -232,9 +235,6 @@ class RankingsViewSet(viewsets.ViewSet):
     @action(detail=False, methods=['get'])
     def most_completed(self, request):
         """Users with most completed wishes."""
-        from django.contrib.auth import get_user_model
-        User = get_user_model()
-        
         rankings = User.objects.annotate(
             total_completed=Count(
                 'assigned_wishes',
@@ -250,9 +250,6 @@ class RankingsViewSet(viewsets.ViewSet):
     @action(detail=False, methods=['get'])
     def best_rated(self, request):
         """Users with best average rating."""
-        from django.contrib.auth import get_user_model
-        User = get_user_model()
-        
         rankings = User.objects.annotate(
             average_rating=Avg(
                 'assigned_wishes__execution__rating',
@@ -268,9 +265,6 @@ class RankingsViewSet(viewsets.ViewSet):
     @action(detail=False, methods=['get'])
     def fastest_completion(self, request):
         """Users with fastest average completion time."""
-        from django.contrib.auth import get_user_model
-        User = get_user_model()
-        
         rankings = User.objects.annotate(
             average_completion_days=Avg(
                 ExpressionWrapper(

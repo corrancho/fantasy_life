@@ -134,7 +134,7 @@ class Match(models.Model):
 
     def save(self, *args, **kwargs):
         # Ensure user1.id < user2.id for consistency
-        if self.user1.id > self.user2.id:
+        if self.user1_id and self.user2_id and self.user1_id > self.user2_id:
             self.user1, self.user2 = self.user2, self.user1
         super().save(*args, **kwargs)
 

@@ -15,6 +15,8 @@ function App() {
   }, [])
 
   const checkAuth = () => {
+    // Note: localStorage for tokens is acceptable for this demo
+    // For production, consider httpOnly cookies for better XSS protection
     const token = localStorage.getItem('access_token')
     if (token) {
       setIsLoggedIn(true)
