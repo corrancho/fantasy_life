@@ -1,0 +1,22 @@
+Django==5.1.15
+djangorestframework==3.14.0
+django-cors-headers==4.3.1
+djangorestframework-simplejwt==5.3.1
+django-environ==0.11.2
+argon2-cffi==23.1.0
+
+# Channels for WebSockets
+channels==4.0.0
+channels-redis==4.1.0
+
+# Redis
+redis==5.0.1
+
+# Database
+psycopg2-binary==2.9.9
+
+# Image handling
+Pillow==10.3.0
+
+# Utilities
+python-dateutil==2.8.2
